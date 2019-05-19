@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ContactPage.qml</file>
+        <file>ConversationPage.qml</file>
+        <file>qtquickcontrols2.conf</file>
+        <file>ChatToolBar.qml</file>
+        <file>+material/ChatToolBar.qml</file>
+        <file>register.qml</file>
+        <file>gps.qml</file>
+        <file>MasterContactPage.qml</file>
+        <file>MasterConversationPage.qml</file>
+        <file>sam/index_new.js</file>
+        <file>sam/jquery-1.11.2.min.js</file>
+        <file>sam/layers.html</file>
+        <file>sam/ol.css</file>
+        <file>sam/ol.js</file>
+    </qresource>
+</RCC>
