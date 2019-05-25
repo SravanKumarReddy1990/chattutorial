@@ -25,6 +25,7 @@ Page {
             anchors.centerIn: parent
         }
     }
+
     WebView {
          id: webView
          height: parent.height
