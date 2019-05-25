@@ -81,6 +81,10 @@ Page {
                               name: "Client Camera"
                               url: "qrc:///register.qml"
                           }
+                          ListElement {
+                              name: "Live Video Streams"
+                              url: "qrc:///LiveVideoStreams.qml"
+                          }
                 }
             delegate: ItemDelegate {
                 text: name
@@ -94,6 +98,8 @@ Page {
                         notificationClient.openservercamActivity();
                     }else if(name == "Client Camera"){
                         notificationClient.openclientcamActivity();
+                    }else if(name == "Live Video Streams"){
+                        root.StackView.view.push(url, {inConversationWith : name })
                     }else{
                     root.StackView.view.push(url, {inConversationWith : name })
                     }

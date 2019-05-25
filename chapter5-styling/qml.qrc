@@ -15,5 +15,6 @@
         <file>sam/layers.html</file>
         <file>sam/ol.css</file>
         <file>sam/ol.js</file>
+        <file>LiveVideoStreams.qml</file>
     </qresource>
 </RCC>
