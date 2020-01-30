@@ -122,10 +122,26 @@ public:
 
     static void invoke(JNIEnv  *env, jobject obj,jstring text) {
         qDebug() << text;
+       const char *  path = env->GetStringUTFChars( text, NULL ) ;
+qDebug() << " invoke jstring " <<QString::fromLocal8Bit(path);
 
-        notificationClient.getValues();
+QString name = QString::fromLocal8Bit(path);
+QString querys=QString("select * from Contacts where name='%1'").arg(name);
+qDebug() << "Message contentType:" << name;
+   QSqlQuery qrys;
+   if(qrys.exec(querys)){
+      // qDebug()<< qry.value(qry.record().indexOf("user_id")).toString();;
+          if(!qrys.next())
+          {
+QSqlQuery qry;
+QString queryss=QString("INSERT INTO Contacts VALUES('%1')").arg(name);
+if(qry.exec(queryss)){
 
-
+}else{
+qFatal("Failed to query database: %s", qPrintable(qry.lastError().text()));
+}
+          }
+   }
     }
 
 };

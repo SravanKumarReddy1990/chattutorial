@@ -64,7 +64,10 @@ ApplicationWindow {
         anchors.fill: parent
         initialItem: ContactPage {}
     }
-
+    Connections {
+            target: GUI
+            onBack: console.log("back")
+        }
     Dialog {
         id:maindialog
           visible: false

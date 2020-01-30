@@ -37,6 +37,9 @@
 #include <QDomNode>
 #include <QtAndroidExtras/QAndroidJniObject>
 #include <QDebug>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QSqlRecord>
 NotificationClient::NotificationClient(QObject *parent)
     : QObject(parent)
 {
@@ -73,53 +76,54 @@ void NotificationClient::getValues(){
                                        "(Ljava/lang/String;)Ljava/lang/String;",
                                        javaNotification.object<jstring>());
     qDebug() << stringNumber.toString();
-    QDomDocument d;
-      d.setContent(stringNumber.toString());
-      QDomNode n = d.firstChild();
-      while (!n.isNull()) {
-          if (n.isElement()) {
-              QDomElement e = n.toElement();
-              QDomAttr uid = e.attributeNode("uid");
-              qDebug() << uid.value() << endl;
-              QString suid=uid.value();
-              QDomAttr name = e.attributeNode("name");
-              qDebug() << name.value() << endl;
-              QString sname=name.value();
-              QDomAttr gender = e.attributeNode("gender");
-              qDebug() << gender.value() << endl;
-              QString sgender=gender.value();
-              QDomAttr yob = e.attributeNode("yob");
-              qDebug() << yob.value() << endl;
-              QString syob=yob.value();
-              QDomAttr co = e.attributeNode("co");
-              qDebug() << co.value() << endl;
-              QString sco=co.value();
-              QDomAttr house = e.attributeNode("house");
-              qDebug() << house.value() << endl;
-              QString shouse=house.value();
-              QDomAttr vtc = e.attributeNode("vtc");
-              qDebug() << vtc.value() << endl;
-              QString svtc=vtc.value();
-              QDomAttr po = e.attributeNode("po");
-              qDebug() << po.value() << endl;
-              QString spo=po.value();
-              QDomAttr dist = e.attributeNode("dist");
-              qDebug() << dist.value() << endl;
-              QString sdist=dist.value();
-              QDomAttr subdist = e.attributeNode("subdist");
-              qDebug() << subdist.value() << endl;
-              QString ssubdist=subdist.value();
-              QDomAttr state = e.attributeNode("state");
-              qDebug() << state.value() << endl;
-              QString sstate=state.value();
-              QDomAttr pc = e.attributeNode("pc");
-              qDebug() << pc.value() << endl;
-              QString spc=pc.value();
-               replyAdhar(suid+","+sname+","+sgender+","+syob+","+sco+","+shouse+","+svtc+","+spo+","+sdist+","+ssubdist+","+sstate+","+spc);
-             // break;
-          }
-          n = n.nextSibling();
-      }
+
+//    QDomDocument d;
+//      d.setContent(stringNumber.toString());
+//      QDomNode n = d.firstChild();
+//      while (!n.isNull()) {
+//          if (n.isElement()) {
+//              QDomElement e = n.toElement();
+//              QDomAttr uid = e.attributeNode("uid");
+//              qDebug() << uid.value() << endl;
+//              QString suid=uid.value();
+//              QDomAttr name = e.attributeNode("name");
+//              qDebug() << name.value() << endl;
+//              QString sname=name.value();
+//              QDomAttr gender = e.attributeNode("gender");
+//              qDebug() << gender.value() << endl;
+//              QString sgender=gender.value();
+//              QDomAttr yob = e.attributeNode("yob");
+//              qDebug() << yob.value() << endl;
+//              QString syob=yob.value();
+//              QDomAttr co = e.attributeNode("co");
+//              qDebug() << co.value() << endl;
+//              QString sco=co.value();
+//              QDomAttr house = e.attributeNode("house");
+//              qDebug() << house.value() << endl;
+//              QString shouse=house.value();
+//              QDomAttr vtc = e.attributeNode("vtc");
+//              qDebug() << vtc.value() << endl;
+//              QString svtc=vtc.value();
+//              QDomAttr po = e.attributeNode("po");
+//              qDebug() << po.value() << endl;
+//              QString spo=po.value();
+//              QDomAttr dist = e.attributeNode("dist");
+//              qDebug() << dist.value() << endl;
+//              QString sdist=dist.value();
+//              QDomAttr subdist = e.attributeNode("subdist");
+//              qDebug() << subdist.value() << endl;
+//              QString ssubdist=subdist.value();
+//              QDomAttr state = e.attributeNode("state");
+//              qDebug() << state.value() << endl;
+//              QString sstate=state.value();
+//              QDomAttr pc = e.attributeNode("pc");
+//              qDebug() << pc.value() << endl;
+//              QString spc=pc.value();
+//               replyAdhar(suid+","+sname+","+sgender+","+syob+","+sco+","+shouse+","+svtc+","+spo+","+sdist+","+ssubdist+","+sstate+","+spc);
+//             // break;
+//          }
+//          n = n.nextSibling();
+//      }
 
 }
 void NotificationClient::opensecondActivity()

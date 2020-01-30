@@ -49,7 +49,12 @@ public class NotificationClient extends org.qtproject.qt5.android.bindings.QtAct
     {
         m_instance = this;
     }
-
+@Override
+public void onBackPressed() {
+  // Log.d("CDA", "onBackPressed Called");
+  super.onBackPressed();
+              this.finish();
+}
     public static String notify(String s)
     {
         if (m_notificationManager == null) {
