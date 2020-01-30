@@ -143,7 +143,7 @@ Page {
 
             Image {
                 id: avatar
-                source: "qrc:/" + model.display.replace(" ", "_") + ".png"
+                source: "qrc:/Albert_Einstein.png"
             }
         }
     }
@@ -154,7 +154,7 @@ Page {
             console.log("user logged in : ")
                 //maindialog.close();
             notificationClient.replyAdhar.connect(resultHandler);
-            notificationClient.opensecondActivity();
+            //notificationClient.opensecondActivity();
         }
     }
     function resultHandler(result) {

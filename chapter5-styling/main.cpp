@@ -132,6 +132,7 @@ public:
 #include <QAndroidJniObject>
 #include <QAndroidJniEnvironment>
 #include <jni.h>
+#include <echoclient.h>
 JNIEXPORT
 jint
 JNI_OnLoad(JavaVM* vm, void*) {
@@ -184,6 +185,8 @@ int main(int argc, char *argv[])
     //CustomTimer customTimer;
     //customTimer.startTimers();
     //QtWebEngine::initialize();
+EchoClient client(QUrl(QStringLiteral("ws")), true);
+engine.rootContext()->setContextProperty("echoclient",&client);
 
     engine.rootContext()->setContextProperty("notificationClient",&notificationClient);
     DBMan dbm;

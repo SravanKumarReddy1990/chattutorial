@@ -1,11 +1,12 @@
 TEMPLATE = app
 
-QT += qml quick sql positioning androidextras xml
+QT += qml quick sql positioning androidextras xml websockets
 CONFIG += c++11
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android-sources
 
 HEADERS += sqlcontactmodel.h \
+    echoclient.h \
     sqlconversationmodel.h \
     dbman.h\
     gps.h \
@@ -13,6 +14,7 @@ HEADERS += sqlcontactmodel.h \
     notificationclient.h
 
 SOURCES += main.cpp \
+    echoclient.cpp \
     sqlcontactmodel.cpp \
     sqlconversationmodel.cpp \
     dbman.cpp\

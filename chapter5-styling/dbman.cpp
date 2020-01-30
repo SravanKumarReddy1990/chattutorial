@@ -4,7 +4,9 @@ DBMan::DBMan(QObject *parent): QObject(parent)
 {
     qDebug() << " Function invoking";
 //createDatabase();
+
 }
+
 void DBMan::createDatabase(){
     if (QSqlDatabase::database().tables().contains(QStringLiteral("Contacts"))) {
         // The table already exists; we don't need to do anything.
@@ -51,4 +53,14 @@ QString DBMan::isloginDataBase(){
        //qFatal("Failed to query database: %s", qPrintable(qry.lastError().text()));
        }
        return "no";
+}
+void DBMan::insertContactsDataBase(QString name){
+       QSqlQuery qry;
+       qDebug() << "Message contentType:" << name;
+       QString querys=QString("INSERT INTO Contacts VALUES('%1')").arg(name);
+       if(qry.exec()){
+
+       }else{
+       qFatal("Failed to query database: %s", qPrintable(qry.lastError().text()));
+       }
 }

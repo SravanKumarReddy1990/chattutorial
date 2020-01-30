@@ -3,12 +3,13 @@
 Gps::Gps(QObject *parent): QObject(parent)
 {
 source = QGeoPositionInfoSource::createDefaultSource(this);
-if (source) {
+//if (source) {
     connect(source, SIGNAL(positionUpdated(QGeoPositionInfo)),
             this, SLOT(positionUpdated(QGeoPositionInfo)));
-}
+//}
 }
 void Gps::startUpdates(){
+    qDebug() << "Position updating :" ;
 source->startUpdates();
 }
 void Gps::stopUpdates(){
@@ -34,8 +35,8 @@ QString Gps::replaceCharPolygonend(QString st){
 void Gps::positionUpdated(const QGeoPositionInfo &info)
 {
     qgeo=info;
-    if (qgeo.isValid())
-     {
+   // if (qgeo.isValid())
+   //  {
      // Get the current location coordinates
      QGeoCoordinate geoCoordinate = qgeo.coordinate();
      qreal latitude = geoCoordinate.latitude();
@@ -44,11 +45,11 @@ void Gps::positionUpdated(const QGeoPositionInfo &info)
      QString lat= QString("%1,%2").arg(latitude).arg(longitude);
      emit replyAvailable(lat);
      //return lat.toLocal8Bit().constData();
-    }else{
-        QString text=QString("Location Not Found");
-        emit replyAvailable(text);
+    //}else{
+    //    QString text=QString("Location Not Found");
+    //    emit replyAvailable(text);
         //return text.toLocal8Bit().constData();
-    }
+    //}
 
 
 }
