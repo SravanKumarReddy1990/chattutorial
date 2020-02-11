@@ -35,6 +35,8 @@
 #define NOTIFICATIONCLIENT_H
 
 #include <QObject>
+#include <QStandardPaths>
+#include <QDir>
 
 class NotificationClient : public QObject
 {
@@ -53,6 +55,7 @@ public slots:
     void updateAndroidNotification();
     void opensecondActivity();
     void getValues();
+    void setNames(QString name);
     void openservercamActivity();
     void openclientcamActivity();
 

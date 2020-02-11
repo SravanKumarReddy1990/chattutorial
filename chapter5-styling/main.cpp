@@ -60,7 +60,7 @@
 #include "gps.h"
 #include <customtimer.h>
 #include "notificationclient.h"
-
+#include <QObject>
 #include <QCoreApplication>
 #include <QtCore>
 #include <QAndroidJniEnvironment>
@@ -68,14 +68,20 @@
 
 #define JCLASS_Name "com/bsmaps/chat/NotificationClient"
 
-static NotificationClient notificationClient;
+ NotificationClient notificationclient;
 
-class QtAndroidRunnerPriv {
+
+class QtAndroidRunnerPriv
+{
+
 public:
     jclass clazz;
     //jmethodID tick;
 
-    QtAndroidRunnerPriv() {
+   // static QtAndroidRunnerPriv* qtan;
+  // Q_SIGNAL void setNames(QString name);
+   // virtual ~QtAndroidRunnerPriv() {};
+    explicit QtAndroidRunnerPriv() {
         QAndroidJniEnvironment env;
 
         clazz = env->FindClass(JCLASS_Name);
@@ -117,33 +123,15 @@ public:
             }
 
         }
+       // qtan=this;
     }
-
-
     static void invoke(JNIEnv  *env, jobject obj,jstring text) {
         qDebug() << text;
        const char *  path = env->GetStringUTFChars( text, NULL ) ;
 qDebug() << " invoke jstring " <<QString::fromLocal8Bit(path);
-
 QString name = QString::fromLocal8Bit(path);
-QString querys=QString("select * from Contacts where name='%1'").arg(name);
-qDebug() << "Message contentType:" << name;
-   QSqlQuery qrys;
-   if(qrys.exec(querys)){
-      // qDebug()<< qry.value(qry.record().indexOf("user_id")).toString();;
-          if(!qrys.next())
-          {
-QSqlQuery qry;
-QString queryss=QString("INSERT INTO Contacts VALUES('%1')").arg(name);
-if(qry.exec(queryss)){
-
-}else{
-qFatal("Failed to query database: %s", qPrintable(qry.lastError().text()));
-}
-          }
-   }
+notificationclient.setNames(name);
     }
-
 };
 #include <QAndroidJniObject>
 #include <QAndroidJniEnvironment>
@@ -153,12 +141,15 @@ JNIEXPORT
 jint
 JNI_OnLoad(JavaVM* vm, void*) {
     Q_UNUSED(vm);
+
     QtAndroidRunnerPriv qtAndroidRunnerPriv;
+ // QObject::connect(&qtAndroidRunnerPriv, SIGNAL(setNames), &notificationclient,SLOT(setNames));
 
     return JNI_VERSION_1_6;
 }
 
-void connectToDatabase()
+
+static void connectToDatabase()
 {
      qDebug() << "Connected Database" ;
     QSqlDatabase database = QSqlDatabase::database();
@@ -204,7 +195,7 @@ int main(int argc, char *argv[])
 EchoClient client(QUrl(QStringLiteral("ws")), true);
 engine.rootContext()->setContextProperty("echoclient",&client);
 
-    engine.rootContext()->setContextProperty("notificationClient",&notificationClient);
+    engine.rootContext()->setContextProperty("notificationClient",&notificationclient);
     DBMan dbm;
     dbm.createDatabase();
     engine.rootContext()->setContextProperty("dbm",&dbm);

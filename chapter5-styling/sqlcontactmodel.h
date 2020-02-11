@@ -52,11 +52,14 @@
 #define SQLCONTACTMODEL_H
 
 #include <QSqlQueryModel>
+#include <QStandardPaths>
+#include <QDir>
 
 class SqlContactModel : public QSqlQueryModel
 {
 public:
     SqlContactModel(QObject *parent = 0);
+    void connectToDatabasess();
 };
 
 #endif // SQLCONTACTMODEL_H

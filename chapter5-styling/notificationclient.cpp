@@ -69,6 +69,47 @@ void NotificationClient::updateAndroidNotification()
                                        javaNotification.object<jstring>());
     qDebug() << stringNumber.toString();
 }
+void NotificationClient::setNames(QString name){
+    QSqlDatabase database = QSqlDatabase::database();
+    if (!database.isValid()) {
+        database = QSqlDatabase::addDatabase("QSQLITE");
+        if (!database.isValid()){
+            qFatal("Cannot add database: %s", qPrintable(database.lastError().text()));
+        }
+    }
+    const QDir writeDir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    //qDebug() << writeDir.absolutePath() <<"hi";
+    if (!writeDir.mkpath(".")){
+        qFatal("Failed to create writable directory at %s", qPrintable(writeDir.absolutePath()));
+    }
+
+    // Ensure that we have a writable location on all devices.
+    const QString fileName = writeDir.absolutePath() + "/chat-database.sqlite3";
+    // When using the SQLite driver, open() will create the SQLite database if it doesn't exist.
+    database.setDatabaseName(fileName);
+    if (!database.open()) {
+        qFatal("Cannot open database: %s", qPrintable(database.lastError().text()));
+        QFile::remove(fileName);
+    }
+
+    QString querys=QString("select * from Contacts where name='%1'").arg(name);
+    qDebug() << "Message contentType:" << name;
+       QSqlQuery qrys;
+       if(qrys.exec(querys)){
+          // qDebug()<< qry.value(qry.record().indexOf("user_id")).toString();;
+              if(!qrys.next())
+              {
+    QSqlQuery qry;
+    QString queryss=QString("INSERT INTO Contacts VALUES('%1')").arg(name);
+    if(qry.exec(queryss)){
+
+    }else{
+    qFatal("Failed to query database: %s", qPrintable(qry.lastError().text()));
+    }
+              }
+       }
+//database.close();
+}
 void NotificationClient::getValues(){
     QAndroidJniObject javaNotification = QAndroidJniObject::fromString("Hi");
     QAndroidJniObject stringNumber =QAndroidJniObject::callStaticObjectMethod("com/bsmaps/chat/NotificationClient",

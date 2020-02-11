@@ -7,6 +7,7 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android-sources
 
 HEADERS += sqlcontactmodel.h \
     echoclient.h \
+    #qtandroidrunnerpriv.h \
     sqlconversationmodel.h \
     dbman.h\
     gps.h \
@@ -15,6 +16,7 @@ HEADERS += sqlcontactmodel.h \
 
 SOURCES += main.cpp \
     echoclient.cpp \
+    #qtandroidrunnerpriv.cpp \
     sqlcontactmodel.cpp \
     sqlconversationmodel.cpp \
     dbman.cpp\

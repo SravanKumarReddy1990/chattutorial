@@ -52,6 +52,8 @@
 #define SQLCONVERSATIONMODEL_H
 
 #include <QSqlTableModel>
+#include <QStandardPaths>
+#include <QDir>
 
 class SqlConversationModel : public QSqlTableModel
 {
@@ -66,6 +68,7 @@ public:
 
     QVariant data(const QModelIndex &index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
+    void connectToDatabases();
 
     Q_INVOKABLE void sendMessage(const QString &recipient, const QString &message);
 
