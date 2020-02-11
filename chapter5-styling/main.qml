@@ -59,15 +59,19 @@ ApplicationWindow {
     width: 540
     height: 960
     visible: true
+
     StackView {
         id: stackView
         anchors.fill: parent
         initialItem: ContactPage {}
-    }
-    Connections {
-            target: GUI
-            onBack: console.log("back")
+        focus:true
+        Keys.enabled: true
+        Keys.onBackPressed : {
+            console.log("Back")
+            console.log(event.key)
+            Qt.quit();
         }
+    }
     Dialog {
         id:maindialog
           visible: false
