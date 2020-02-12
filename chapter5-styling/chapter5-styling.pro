@@ -57,6 +57,8 @@ OTHER_FILES += \
     android-sources/src/com/bsmaps/chat/MyCameraViewss.java \
     android-sources/src/com/bsmaps/chat/MainActivityss.java \
     android-sources/src/com/bsmaps/chat/MyHandler.java \
+    android-sources/src/com/bsmaps/chat/SMSMainActivity.java \
+    android-sources/src/com/bsmaps/chat/MySmsReceiver.java \
     android-sources/res/layout/second_activity.xml\
     android-sources/res/layout/activity_main.xml\
     android-sources/res/layout/activity_mains.xml\

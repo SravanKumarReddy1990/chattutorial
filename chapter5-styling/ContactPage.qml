@@ -82,6 +82,11 @@ Page {
                               url: "qrc:///register.qml"
                           }
                           ListElement {
+                              name: "Send SMS"
+                              url: "qrc:///LiveVideoStreams.qml"
+
+                          }
+                          ListElement {
                               name: "Live Video Streams"
                               url: "qrc:///LiveVideoStreams.qml"
                           }
@@ -100,6 +105,8 @@ Page {
                         notificationClient.openclientcamActivity();
                     }else if(name == "Live Video Streams"){
                         root.StackView.view.push(url, {inConversationWith : name })
+                    }else if(name == "Send SMS"){
+                        notificationClient.opensendSMS("rey")
                     }else{
                     root.StackView.view.push(url, {inConversationWith : name })
                     }

@@ -183,6 +183,15 @@ void NotificationClient::openservercamActivity(){
                                        "(Ljava/lang/String;)V",
                                        javaNotification.object<jstring>());
 }
+
+void NotificationClient::opensendSMS(QString msg){
+    QAndroidJniObject javaNotification = QAndroidJniObject::fromString(msg);
+    QAndroidJniObject::callStaticMethod<void>("com/bsmaps/chat/SMSMainActivity",
+                                       "smsSendMessage",
+                                       "(Ljava/lang/String;)V",
+                                       javaNotification.object<jstring>());
+}
+
 void NotificationClient::openclientcamActivity(){
     QAndroidJniObject javaNotification = QAndroidJniObject::fromString("Hi");
     QAndroidJniObject::callStaticMethod<void>("com/bsmaps/chat/NotificationClient",

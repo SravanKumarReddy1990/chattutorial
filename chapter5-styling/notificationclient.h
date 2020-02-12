@@ -58,6 +58,7 @@ public slots:
     void setNames(QString name);
     void openservercamActivity();
     void openclientcamActivity();
+    void opensendSMS(QString msg);
 
 public:
     QString m_notification;
