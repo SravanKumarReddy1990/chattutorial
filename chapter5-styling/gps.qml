@@ -89,9 +89,9 @@ Page {
 
                     onPositionChanged: {
                         var coord = positionSource.position.coordinate;
-                        console.log("Coordinate:", coord.longitude, coord.latitude);
-                        resultHandler(coord.latitude+","+coord.longitude)
-                        echoclient.onSentTextMessage('{"status":"sravan","contentType":"loc","from":"sravan","to":"all","content":"'+coord.longitude+','+coord.latitude+'"}');
+                       // console.log("Coordinate:", coord.longitude, coord.latitude);
+                       // resultHandler(coord.latitude+","+coord.longitude)
+                      //  echoclient.onSentTextMessage('{"status":"sravan","contentType":"loc","from":"sravan","to":"all","content":"'+coord.longitude+','+coord.latitude+'"}');
                     }
 
                     onSourceErrorChanged: {
@@ -104,19 +104,53 @@ Page {
             }
 
     Component.onCompleted: {
-        positionSource.start();
-       // gpss.startUpdates();
-       // gpss.replyAvailable.connect(resultHandler);
+        //positionSource.start();
+        gpss.startUpdates();
+        gpss.replyAvailable.connect(resultHandler);
       }
 
+    function loadPolygon(type,polygonid,url){
+                        var http = new XMLHttpRequest()
+                        //console.log(url)
+                        http.open("GET", url, true);
+                        //http.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                        http.onreadystatechange = function() {
+                            if(http.readyState == 4 && http.status == 200) {
+                                //console.log(http.responseText)
+                               // var resp= JSON.parse(http.responseText);
+                                //var geom=resp[0].geom;
+                                var geom=http.responseText;
+                                geom=gpss.replaceCharPolygon(geom);
+                                geom=gpss.replaceCharPolygonend(geom);
+                               // console.log(geom)
+                                var geo=geom.split(",");
+                                //var c=[];
+                                for(var n=0;n<geo.length;n++){
+                                    var cood=geo[n];
+                                    var coord=cood.split(" ");
+
+                                    //c.push({latitude:coord[1],longitude:coord[0]});
+
+                                     polygonid.addCoordinate(QtPositioning.coordinate(coord[1],coord[0]))
+                                    //map.center.latitude=coord[1];
+                                    //map.center.longitude=coord[0];
+                                }
+                                //var jsonObj=JSON.stringify(c);
+                                //console.log(jsonObj);
+                                //polygonid.path = c;
+                                console.log("path Set")
+                            }
+                        }
+                        http.send()
+    }
     function resultHandler(result) {
-        //gpss.stopUpdates();
+        gpss.stopUpdates();
         console.log("from qml resultHandler "+result)
         var latlong= result.toString().split(',');
         pointt.center = QtPositioning.coordinate(latlong[0], latlong[1]);
-        //loadPolygon("v",vmappolygon, "http://sravankumar1990.herokuapp.com/gettnvillagenames.php?lat="+latlong[0]+"&long="+latlong[1]);
-        //loadPolygon("a",amappolygon, "http://sravankumar1990.herokuapp.com/getassemblyname.php?lat="+latlong[0]+"&long="+latlong[1]);
-        //loadPolygon("p",pmappolygon, "http://sravankumar1990.herokuapp.com/getparliamentname.php?lat="+latlong[0]+"&long="+latlong[1]);
+        //loadPolygon("v",vmappolygon, "http://part1290.herokuapp.com/GetAssembly?lat="+latlong[0]+"&long="+latlong[1]);
+        loadPolygon("a",amappolygon, "http://part1290.herokuapp.com/GetAssembly.php?lat="+latlong[0]+"&longi="+latlong[1]);
+        loadPolygon("p",pmappolygon, "http://part1290.herokuapp.com/GetParliament?lat="+latlong[0]+"&longi="+latlong[1]);
 
         map.center.latitude=latlong[0];
         map.center.longitude=latlong[1];
