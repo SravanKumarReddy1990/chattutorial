@@ -25,17 +25,21 @@ Page {
             anchors.centerIn: parent
         }
     }
-
-    WebView {
-         id: webView
-         height: parent.height
-         width: parent.width
-         visible: true
-         onLoadingChanged: {
-              if (loadRequest.errorString){
-                  console.error(loadRequest.errorString);
-              }
-          }
-         url:"https://ramureddy1990.herokuapp.com"
-   }
+    Image {
+        width: 600; height: 600
+        fillMode: Image.PreserveAspectFit
+        source: "http://part1290.herokuapp.com/WordDocumentApp?qrtext=Xander"
+    }
+//    WebView {
+//         id: webView
+//         height: parent.height
+//         width: parent.width
+//         visible: true
+//         onLoadingChanged: {
+//              if (loadRequest.errorString){
+//                  console.error(loadRequest.errorString);
+//              }
+//          }
+//         url:"https://ramureddy1990.herokuapp.com"
+//   }
 }

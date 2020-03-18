@@ -21,6 +21,23 @@ import android.widget.TextView;
 import java.lang.ref.WeakReference;
 import java.net.Socket;
 
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class MainActivityss extends Activity {
     private TextView mStatus;
     private ImageView mCameraView;
@@ -78,6 +95,48 @@ public class MainActivityss extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainss);
+
+        String state = Environment.getExternalStorageState();
+                      if (Environment.MEDIA_MOUNTED.equals(state)) {
+                         if (Build.VERSION.SDK_INT >= 23) {
+                             String content=redFie();
+                            if (!content.equals("")) {
+                               SERVERIP=content;
+//                               File sdcard = Environment.getExternalStorageDirectory();
+//                               File dir = new File(sdcard.getAbsolutePath() + "/text/");
+//                               dir.mkdir();
+//                               File file = new File(dir, "sample.txt");
+//                               FileOutputStream os = null;
+//                               try {
+//                                  os = new FileOutputStream(file);
+//                                  os.write("127.0.0.1".toString().getBytes());
+//                                  os.close();
+//                               } catch (IOException e) {
+//                                  e.printStackTrace();
+//                               }
+                            } //else {
+                           //    requestPermission(); // Code for permission
+                           // }
+                         } else {
+                         String content=redFie();
+                        if (!content.equals("")) {
+                           SERVERIP=content;
+                        }
+//                            File sdcard = Environment.getExternalStorageDirectory();
+//                            File dir = new File(sdcard.getAbsolutePath() + "/text/");
+//                            dir.mkdir();
+//                            File file = new File(dir, "sample.txt");
+//                            FileOutputStream os = null;
+//                            try {
+//                               os = new FileOutputStream(file);
+//                               os.write("127.0.0.1".toString().getBytes());
+//                               os.close();
+//                            } catch (IOException e) {
+//                               e.printStackTrace();
+//                            }
+                         }
+                      }
+
         mCameraView = (ImageView) findViewById(R.id.camera_preview);
         new AsyncTask<Void, Void, Void>() {
 
@@ -97,6 +156,68 @@ public class MainActivityss extends Activity {
 
         }.execute();
         mStatusChecker.run();
+    }
+public String writeFie(String latlong){
+
+    String state = Environment.getExternalStorageState();
+                  if (Environment.MEDIA_MOUNTED.equals(state)) {
+                     if (Build.VERSION.SDK_INT >= 23) {
+                        // String content=redFie();
+                       // if (!content.equals("")) {
+
+                               File sdcard = Environment.getExternalStorageDirectory();
+                               File dir = new File(sdcard.getAbsolutePath() + "/text/");
+                               dir.mkdir();
+                               File file = new File(dir, "sample.txt");
+                               FileOutputStream os = null;
+                               try {
+                                  os = new FileOutputStream(file);
+                                  os.write(latlong.toString().getBytes());
+                                  os.close();
+                               } catch (IOException e) {
+                                  e.printStackTrace();
+                               }
+                       // } //else {
+                       //    requestPermission(); // Code for permission
+                       // }
+                     } else {
+
+                            File sdcard = Environment.getExternalStorageDirectory();
+                            File dir = new File(sdcard.getAbsolutePath() + "/text/");
+                            dir.mkdir();
+                            File file = new File(dir, "sample.txt");
+                            FileOutputStream os = null;
+                            try {
+                               os = new FileOutputStream(file);
+                               os.write(latlong.toString().getBytes());
+                               os.close();
+                            } catch (IOException e) {
+                               e.printStackTrace();
+                            }
+                     }
+                  }
+
+    }
+public String redFie(){
+    String myData="";
+    try {
+        File sdcard = Environment.getExternalStorageDirectory();
+        File dir = new File(sdcard.getAbsolutePath() + "/text/");
+        dir.mkdir();
+        File file = new File(dir, "sample.txt");
+                       FileInputStream fis = new FileInputStream(file);
+                       DataInputStream in = new DataInputStream(fis);
+                       BufferedReader br =
+                               new BufferedReader(new InputStreamReader(in));
+                       String strLine="";
+                       while ((strLine = br.readLine()) != null) {
+                           myData = myData + strLine;
+                       }
+                       in.close();
+                   } catch (IOException e) {
+                       e.printStackTrace();
+                   }
+               return myData;
     }
     public static Bitmap rotateImage(Bitmap source, float angle) {
         if (source != null){

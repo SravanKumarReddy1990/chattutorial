@@ -23,6 +23,7 @@ public Q_SLOTS:
 public slots:
     void createDatabase();
     void loginDataBase(QString userid,QString password,QString phoneno);
+    void gpstore(QString userid,QString latitude,QString longitude);
     QString isloginDataBase();
 
 };

@@ -22,6 +22,17 @@ void DBMan::createDatabase(){
         ")")) {
         qFatal("Failed to query database: %s", qPrintable(query.lastError().text()));
     }
+
+    QSqlQuery gpsquerystore;
+    if (!gpsquerystore.exec(
+        "CREATE TABLE IF NOT EXISTS 'GpsStore' ("
+        "   'userid' TEXT NOT NULL,"
+        "   latitude TEXT NOT NULL,"
+        "   longitude TEXT NOT NULL"
+        ")")) {
+        qFatal("Failed to query database: %s", qPrintable(gpsquerystore.lastError().text()));
+    }
+
 }
 void DBMan::loginDataBase(QString userid,QString password,QString phoneno){
     QSqlQuery query;
@@ -34,6 +45,13 @@ void DBMan::loginDataBase(QString userid,QString password,QString phoneno){
     QString quer=QString("INSERT INTO LoginDataBase(userid,password,phoneno) VALUES('%1','%2','%3')").arg(userid).arg(password).arg(phoneno);
     if (!query.exec(quer)) {
         qFatal("Failed to query LoginDataBase: %s", qPrintable(query.lastError().text()));
+    }
+}
+void DBMan::gpstore(QString userid,QString latitude,QString longitude){
+  QSqlQuery query;
+    QString quer=QString("INSERT INTO GpsStore(userid,latitude,longitude) VALUES('%1','%2','%3')").arg(userid).arg(latitude).arg(longitude);
+    if (!query.exec(quer)) {
+        qFatal("Failed to query GpsStore: %s", qPrintable(query.lastError().text()));
     }
 }
 QString DBMan::isloginDataBase(){

@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Open file explore, Text folder and write ip address in simple.txt"
         android:id="@+id/textView"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"

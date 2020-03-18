@@ -12,9 +12,15 @@ EchoClient::EchoClient(const QUrl &url, bool debug, QObject *parent) :
         qDebug() << "WebSocket server:" << url;
     connect(&m_webSocket, &QWebSocket::connected, this, &EchoClient::onConnected);
     connect(&m_webSocket, &QWebSocket::disconnected, this, &EchoClient::closed);
-    m_webSocket.open(QUrl("ws://part1290.herokuapp.com/chat/sravan"));
+    //m_webSocket.open(QUrl("ws://part1290.herokuapp.com/chat/sravan"));
 }
 
+void  EchoClient::onOpen(){
+    m_webSocket.open(QUrl("ws://part1290.herokuapp.com/chat/sravan"));
+}
+void EchoClient::onClose(){
+    m_webSocket.close();
+}
 void EchoClient::onConnected()
 {
     if (m_debug)

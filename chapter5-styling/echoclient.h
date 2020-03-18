@@ -24,6 +24,8 @@ private Q_SLOTS:
     void onTextMessageReceived(QString message);
 public slots:
     void onSentTextMessage(QString message);
+    void onOpen();
+    void onClose();
 
 private:
     QWebSocket m_webSocket;

@@ -9,6 +9,7 @@ Page {
     property var locationData:({})
     //locationData.coordinate={};
     property string inConversationWith
+    property int gpscount: 0
     header: ChatToolBar {
         ToolButton {
             text: qsTr("Back")
@@ -144,16 +145,19 @@ Page {
                         http.send()
     }
     function resultHandler(result) {
-        gpss.stopUpdates();
         console.log("from qml resultHandler "+result)
         var latlong= result.toString().split(',');
+        if(gpscount==0){
+       // gpss.stopUpdates();
         pointt.center = QtPositioning.coordinate(latlong[0], latlong[1]);
         //loadPolygon("v",vmappolygon, "http://part1290.herokuapp.com/GetAssembly?lat="+latlong[0]+"&long="+latlong[1]);
         loadPolygon("a",amappolygon, "http://part1290.herokuapp.com/GetAssembly.php?lat="+latlong[0]+"&longi="+latlong[1]);
-        loadPolygon("p",pmappolygon, "http://part1290.herokuapp.com/GetParliament?lat="+latlong[0]+"&longi="+latlong[1]);
+        //loadPolygon("p",pmappolygon, "http://part1290.herokuapp.com/GetParliament?lat="+latlong[0]+"&longi="+latlong[1]);
 
         map.center.latitude=latlong[0];
         map.center.longitude=latlong[1];
-
+        }
+        dbm.gpstore("",latlong[0],latlong[1]);
+        gpscount++;
     }
 }

@@ -193,6 +193,7 @@ int main(int argc, char *argv[])
     //customTimer.startTimers();
     //QtWebEngine::initialize();
 EchoClient client(QUrl(QStringLiteral("ws")), true);
+//client.onOpen();
 engine.rootContext()->setContextProperty("echoclient",&client);
 
     engine.rootContext()->setContextProperty("notificationClient",&notificationclient);

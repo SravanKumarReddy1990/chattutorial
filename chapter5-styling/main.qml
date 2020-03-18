@@ -71,7 +71,9 @@ ApplicationWindow {
             console.log(event.key)
             Qt.quit();
         }
+
     }
+
     Dialog {
         id:maindialog
           visible: false
@@ -121,9 +123,7 @@ ApplicationWindow {
                       }
 
                   }
-                  Component.onCompleted: {
-                        webView.url = "file:///assets/layers.html";
-                  }
+
                   WebView {
                        id: webView
                        y:closebutton.y +userid.height+10

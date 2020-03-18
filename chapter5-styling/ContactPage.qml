@@ -8,7 +8,7 @@ import io.qt.examples.chattutorial 1.0
 Page {
     id: root
     readonly property bool inPortrait: window.width < window.height
-
+    //property int count: 0;
     Drawer {
         id: drawer
 
@@ -69,7 +69,7 @@ Page {
                               url: "qrc:///gps.qml"
                           }
                           ListElement {
-                              name: "Bye"
+                              name: "Scan Qr Code"
                               url: "qrc:///register.qml"
                           }
                           ListElement {
@@ -81,13 +81,13 @@ Page {
                               name: "Client Camera"
                               url: "qrc:///register.qml"
                           }
+//                          ListElement {
+//                              name: "Send SMS"
+//                              url: "qrc:///LiveVideoStreams.qml"
+//
+//                          }
                           ListElement {
-                              name: "Send SMS"
-                              url: "qrc:///LiveVideoStreams.qml"
-
-                          }
-                          ListElement {
-                              name: "Live Video Streams"
+                              name: "Your QrCode"
                               url: "qrc:///LiveVideoStreams.qml"
                           }
                 }
@@ -97,16 +97,17 @@ Page {
                 onClicked: {
                     console.log("name: "+name)
                     drawer.close()
-                    if(name == "Bye"){
+                    if(name == "Scan Qr Code"){
                     notificationClient.opensecondActivity();
+
                     }else if(name == "Server Camera"){
                         notificationClient.openservercamActivity();
                     }else if(name == "Client Camera"){
                         notificationClient.openclientcamActivity();
-                    }else if(name == "Live Video Streams"){
+                    }else if(name == "Your Qr Code"){
                         root.StackView.view.push(url, {inConversationWith : name })
                     }else if(name == "Send SMS"){
-                        notificationClient.opensendSMS("rey")
+                       // notificationClient.opensendSMS("rey")
                     }else{
                     root.StackView.view.push(url, {inConversationWith : name })
                     }
@@ -154,7 +155,39 @@ Page {
             }
         }
     }
+
+    Connections {
+    target: Qt.application
+
+    onStateChanged: {
+    switch (Qt.application.state) {
+    case Qt.ApplicationSuspended:
+        console.log('ApplicationSuspended')
+        echoclient.onClose();
+        console.log('websocket closed')
+        Qt.quit();
+        break
+    case Qt.ApplicationHidden:
+        console.log('ApplicationHidden')
+        echoclient.onClose();
+        console.log('websocket closed')
+        Qt.quit();
+    break
+    
+    case Qt.ApplicationActive:
+        //raise();
+        //show()
+        //requestActivate()
+        echoclient.onClose();
+        echoclient.onOpen();
+        //sopendraw.text='resume'
+    break
+    }
+    }
+    }
     Component.onCompleted: {
+        //opendraw.text="hi"+count;
+        //count++;
         var userid=dbm.isloginDataBase();
         console.log("user details : "+userid)
         if(userid === "no"){
