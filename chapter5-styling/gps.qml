@@ -18,7 +18,16 @@ Page {
             anchors.verticalCenter: parent.verticalCenter
             onClicked: root.StackView.view.pop()
         }
-
+        ToolButton {
+            text: qsTr("Track to Text")
+            anchors.left: parent.left
+            anchors.leftMargin: 60
+            anchors.verticalCenter: parent.verticalCenter
+            onClicked: {
+            var text=dbm.gpscopy();
+                notificationClient.tracktotext(text)
+            }
+        }
         Label {
             id: pageTitle
             text: inConversationWith

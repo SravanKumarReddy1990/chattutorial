@@ -1,4 +1,5 @@
 #include "dbman.h"
+#include <QJsonArray>
 
 DBMan::DBMan(QObject *parent): QObject(parent)
 {
@@ -53,6 +54,39 @@ void DBMan::gpstore(QString userid,QString latitude,QString longitude){
     if (!query.exec(quer)) {
         qFatal("Failed to query GpsStore: %s", qPrintable(query.lastError().text()));
     }
+}
+QString DBMan::gpscopy(){
+    QJsonArray recordObject;
+//        recordObject.insert("FirstName", QJsonValue::fromVariant("John"));
+//        recordObject.insert("LastName", QJsonValue::fromVariant("Doe"));
+//        recordObject.insert("Age", QJsonValue::fromVariant(43));
+
+    QString quer=QString("select * from GpsStore");
+       QSqlQuery qry;
+       qDebug() << quer;
+       if(qry.exec(quer)){
+          // qDebug()<< qry.value(qry.record().indexOf("user_id")).toString();;
+              if(qry.next())
+              {
+                  qDebug() << qry.value(qry.record().indexOf("userid")).toString();
+                  QJsonObject addressObject;
+                  addressObject.insert("latitude", qry.value(qry.record().indexOf("latitude")).toString());
+                  addressObject.insert("longitude", qry.value(qry.record().indexOf("longitude")).toString());
+                  addressObject.insert("userid",qry.value(qry.record().indexOf("userid")).toString());
+                  recordObject.push_back(addressObject);
+
+              }else{
+              //    return "no";
+              }
+       }else{
+       //qFatal("Failed to query database: %s", qPrintable(qry.lastError().text()));
+       }
+      // return "no";
+
+        QJsonDocument doc(recordObject);
+        QString qstr_test = QString::fromUtf8(doc.toJson().data());
+            qDebug() << doc.toJson();
+            return  qstr_test;
 }
 QString DBMan::isloginDataBase(){
     QString quer=QString("select * from LoginDataBase");

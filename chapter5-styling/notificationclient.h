@@ -59,6 +59,9 @@ public slots:
     void openservercamActivity();
     void openclientcamActivity();
     void opensendSMS(QString msg);
+    void tracktotext(QString msg);
+
+
 
 public:
     QString m_notification;

@@ -157,7 +157,7 @@ public class MainActivityss extends Activity {
         }.execute();
         mStatusChecker.run();
     }
-public String writeFie(String latlong){
+public static void writeFie(String latlong){
 
     String state = Environment.getExternalStorageState();
                   if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -168,7 +168,7 @@ public String writeFie(String latlong){
                                File sdcard = Environment.getExternalStorageDirectory();
                                File dir = new File(sdcard.getAbsolutePath() + "/text/");
                                dir.mkdir();
-                               File file = new File(dir, "sample.txt");
+                               File file = new File(dir, "track.txt");
                                FileOutputStream os = null;
                                try {
                                   os = new FileOutputStream(file);
@@ -185,7 +185,7 @@ public String writeFie(String latlong){
                             File sdcard = Environment.getExternalStorageDirectory();
                             File dir = new File(sdcard.getAbsolutePath() + "/text/");
                             dir.mkdir();
-                            File file = new File(dir, "sample.txt");
+                            File file = new File(dir, "track.txt");
                             FileOutputStream os = null;
                             try {
                                os = new FileOutputStream(file);
